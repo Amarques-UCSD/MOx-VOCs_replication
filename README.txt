@@ -1,16 +1,10 @@
-README for data and code associated with, "Understanding the ability of low-cost MOx sensors to quantify ambient VOCs (collier-Oxandale et al., 2019).
+## README for data and code associated with, "Understanding the ability of low-cost MOx sensors to quantify ambient VOCs (collier-Oxandale et al., 2019).
 
-Included in the Complete Data.mat file are two tables, one for the PrimaryUPod (the main UPod data utlized in the analysis) and the 
-SecondaryUPod (or one, for which the data was used for analysis shown in the supplemental).
+Included in the Complete Data.mat file are two tables, one for the PrimaryUPod (the main UPod data utlized in the analysis) and the SecondaryUPod (or one, for which the data was used for analysis shown in the supplemental).
 
-Opening the code files and running them will produce plots and datasets matching the results from the paper. This will also allow users to further 
-explore both the results from the paper and pursue their own analysis.
+Opening the code files and running them will produce plots and datasets matching the results from the paper. This will also allow users to further explore both the results from the paper and pursue their own analysis.
 
-Note, this data has undergone intial processing, including: the removal of sensor warm-up data, the calculation of new parameters from the raw sensor data 
-(specifically: absolute humidity, and normalized resistances for the two MOx VOC sensors), five-minute averages were calculated, and the all of the sensor 
-data was matched to corresponding five-minute averages of reference data (original versions of the reference data are available through the DISCOVER-AQ database). 
-This processed data is what is available in the Complete Data file. Some code for additonal figures shown in the paper has been exluded here to reduce confusion, 
-for additional code along with guidance using that code, please contact the main contributor of this data (i.e., the contact for the associated journal article).  
+Note, this data has undergone intial processing, including: the removal of sensor warm-up data, the calculation of new parameters from the raw sensor data (specifically: absolute humidity, and normalized resistances for the two MOx VOC sensors), five-minute averages were calculated, and the all of the sensor data was matched to corresponding five-minute averages of reference data (original versions of the reference data are available through the DISCOVER-AQ database). This processed data is what is available in the Complete Data file. Some code for additonal figures shown in the paper has been exluded here to reduce confusion, for additional code along with guidance using that code, please contact the main contributor of this data (i.e., the contact for the associated journal article).  
 
 Column headers are the same for both datasets and are as follows:
 
@@ -45,3 +39,12 @@ TimeL - Time (local)
 
 
 END
+
+## Python implementation
+
+I have taken the matlab code and moved it into python.
+The dataset from CompleteData.mat is stored inside 2 tables, which python can't read so I generated primary.csv and secondary.csv with the script in toPython.m for PrimaryUPod and SecondaryUPod respectively.
+
+The MATLAB code is very repetitive and in some aspects poorly implemented, so in my code, seen in VOC_Mox notebook, I implemented the fitting as a function which can be called with a string for which VOC we want to fit. I have also implemented the iterative fitting that the paper implements.
+
+After that as the model is just a linear regression I wanted to try using some more advanced techniques from machine learning to attempt and get a better predictor. First, as a sanity check I just created a simple LinearLayer using PyTorch and loaded it with the weights from the linear model to confirm that I could save and run this quickly.
